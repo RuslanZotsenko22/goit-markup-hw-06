@@ -12,6 +12,7 @@ ul {
 ul,
 ol {
   padding-left: 0;
+  margin: 0;
 }
 a {
   text-decoration: none;
@@ -21,6 +22,14 @@ a {
 address {
   font-style: normal;
 }
+
+html.burger-opened,
+html.modal-opened,
+html.burger-opened body,
+html.modal-opened body {
+  overflow: hidden;
+}
+
 .web-title {
   color: #2e2f42;
 }
@@ -317,8 +326,126 @@ address {
   align-self: center;
 }
 
+.mobile-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  transform: translateY(-100%);
+  background-color: #fff;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.burger-opened .mobile-menu {
+  transform: translateY(0);
+}
+
+.container-mobile {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px 24px 40px 16px;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+
+.mobile-nav-menu {
+  margin-bottom: auto;
+}
+
+.modal-close-btn {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background-color: #e7e9fc;
+  border-radius: 50%;
+  padding: 0px;
+  line-height: 0;
+  fill: #111111;
+  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+  color: #404bbf;
+  border: none;
+  background-color: #404bbf;
+}
+
+.burger-menu-close {
+  position: static;
+  background-color: #fff;
+  margin-left: auto;
+  margin-bottom: 24px;
+}
+
+.mobile-nav-menu-item {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: #2e2f42;
+}
+
+.mobile-nav-menu-item.active {
+  color: #404bbf;
+}
+
+.mobile-nav-menu-item:not(:last-child) {
+  margin-bottom: 40px;
+}
+
+.burger-menu-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.burger-address {
+  margin-bottom: 48px;
+  margin-top: 50px;
+}
+
+.burger-address-list-item {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.burger-address-list-item > a:focus {
+  color: #4d5ae5;
+}
+
+.burger-address-list-item:not(:last-child) {
+  margin-bottom: 24px;
+}
+
+.socials {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.burger-menu-socials {
+  gap: 40px;
+}
+
 @media screen and (min-width: 480px) {
-  .container {
+  .container,
+  .container-mobile {
     width: 480px;
   }
 
@@ -352,12 +479,30 @@ address {
   gap: 72px;
 }
 
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 408px;
+
+  padding: 72px 24px 24px;
+  border-radius: 4px;
+  background: #fcfcfc;
+  min-height: 584px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 @media screen and (max-width: 768px) {
   .menu-nav,
   .navigation-second {
     display: none;
   }
-
+  .section {
+    padding: 72px 0;
+  }
   .text-name-strategy {
     font-weight: 400;
     font-size: 16px;
@@ -411,6 +556,27 @@ address {
     display: block;
     text-align: center;
   }
+  .modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* width: 302px; */
+    max-width: calc(100vw - 32px);
+    padding: 72px 16px 16px;
+    border-radius: 4px;
+    background: #fcfcfc;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12),
+      0px 2px 1px rgba(0, 0, 0, 0.2);
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: calc(100vh - 16px);
+    overflow-y: auto;
+  }
+  .review-form-description {
+    width: 256px;
+    margin-right: auto;
+    margin-left: auto;
+  }
 }
 
 .name-strategy {
@@ -425,6 +591,9 @@ address {
 @media screen and (min-width: 768px) {
   .container {
     width: 768px;
+  }
+  .section {
+    padding: 112px 0;
   }
 
   .link {
@@ -538,11 +707,18 @@ address {
     align-items: baseline;
     gap: 24px;
   }
+
+  .mobile-menu {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 1160px) {
   .container {
     width: 1160px;
+  }
+  .section {
+    padding: 188px 0;
   }
   .text {
     font-weight: 400;
@@ -637,10 +813,6 @@ address {
   align-items: center;
 }
 
-.section {
-  padding: 188px 0;
-}
-
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -697,12 +869,6 @@ p {
   display: flex;
 }
 
-.socials {
-  display: flex;
-  gap: 24px;
-  justify-content: center;
-  margin-top: 8px;
-}
 .socials-footer {
   gap: 16px;
 }
@@ -784,56 +950,13 @@ p {
     visibility 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.backdrop.is-open {
+.modal-opened .backdrop {
   opacity: 1;
   visibility: visible;
 }
 /* =========== /Backdrop styles =========== */
 
 /* =========== Modal window styles =========== */
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 408px;
-
-  padding: 72px 24px 24px;
-  border-radius: 4px;
-  background: #fcfcfc;
-  min-height: 584px;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12),
-    0px 2px 1px rgba(0, 0, 0, 0.2);
-  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.modal-close-btn {
-  width: 24px;
-  height: 24px;
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  background-color: #e7e9fc;
-  border-radius: 50%;
-  padding: 0px;
-  line-height: 0;
-  fill: #111111;
-  border: none;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
-    border 250ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.modal-close-btn:hover,
-.modal-close-btn:focus {
-  color: #404bbf;
-  border: none;
-  background-color: #404bbf;
-}
 
 /* =========== /Modal window styles =========== */
 
@@ -962,7 +1085,7 @@ p {
   border-radius: 2px;
   cursor: pointer;
   fill: transparent;
-  margin-right: 12px;
+  margin-right: 8px;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
     border 250ms cubic-bezier(0.4, 0, 0.2, 1),
     fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
